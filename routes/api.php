@@ -13,7 +13,8 @@ $api->version('v1', [
         'limit' => config('api.rate_limits.sign.limit'),
         'expires' => config('api.rate_limits.sign.expires'),
     ], function($api) {
-        $api->get('test', 'AuthorizationsController@test')
-            ->name('api.test');
+        // 小程序登录
+        $api->post('weapp/authorizations', 'AuthorizationsController@weappStore')
+            ->name('api.weapp.authorizations.store');
     });
 });
