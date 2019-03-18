@@ -41,5 +41,13 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    public function activities() {
+        return $this->hasMany(Activity::class);
+    }
+
+    public function isAuthorOf($model)
+    {
+        return $this->id == $model->user_id;
+    }
 
 }
