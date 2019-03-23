@@ -42,14 +42,35 @@ $api->version('v1', [
             $api->get('user', 'UsersController@me')
                 ->name('api.user.me');
 
+            $api->get('/activities', "ActivitiesController@myActivities")
+                ->name('api.activities');
+
             $api->post('activities/save/{activity?}', "ActivitiesController@save")
                 ->name('api.activities.save');
+
+            $api->get('activities/{activity}', 'ActivitiesController@show')
+                ->name('api.activities.show');
+
+            $api->put('activities/{activity}/participate', 'ActivitiesController@participate')
+                ->name('api.activities.participate');
+
+            $api->delete('activities/{activity}', 'ActivitiesController@quit')
+                ->name('api.activities.quit');
 
             $api->get('activities/{activity}/participants', 'ActivitiesController@participants')
                 ->name('api.activities.participants');
 
+            $api->delete('activities/{activity}/remove_participants', 'ActivitiesController@removeParticipants')
+                ->name('api.activities.participants.delete');
+
+            $api->get('activities/{activity}/bills', 'BillsController@bills')
+                ->name('api.activities.bills.index');
+
             $api->post('activities/{activity}/bills/{bill?}', 'BillsController@save')
                 ->name('api.activities.bills.save');
+
+
+
 
 
         });

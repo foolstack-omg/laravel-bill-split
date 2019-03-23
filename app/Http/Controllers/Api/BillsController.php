@@ -15,10 +15,26 @@ use App\Models\ActivityParticipant;
 use App\Models\Bill;
 use App\Models\BillItem;
 use App\Models\BillParticipant;
+use App\Transformers\BillTransformer;
 use DB;
 
 class BillsController extends Controller
 {
+    public function bills(Activity $activity) {
+        $bills = $activity->bills()->with(['participants' => function ($query) {
+            $query->where('user_id', $this->user->id);
+        }])->orderBy('created_at', 'desc')->get();
+
+        $bills->each(function($item) {
+            if($item->participants){
+                $item->split_money = $item->participants[0]->split_money;
+                $item->unpaid_money = $item->participants[0]->paid ? 0.00 : $item->split_money;
+            }
+        });
+
+        return $this->response->collection($bills, new BillTransformer());
+    }
+
     public function save(SaveRequest $request, Activity $activity, Bill $bill = null) {
         $participants_collection = collect($request->participants);
 
@@ -26,8 +42,8 @@ class BillsController extends Controller
             return $this->response->errorBadRequest();
         }
 
-        if($participants_collection->pluck('user_id')->diff($activity->participants()->pluck('user_id'))->isNotEmpty()){
-            return $this->response->errorBadRequest();
+        if($participants_collection->pluck('user_id')->diff($activity->participatedUsers()->pluck('user_id'))->isNotEmpty()){
+            return $this->response->errorBadRequest('B2');
         }
 
         DB::transaction(function() use ($request, $activity, $bill, $participants_collection) {

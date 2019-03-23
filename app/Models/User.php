@@ -45,6 +45,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Activity::class);
     }
 
+    public function participatedActivities() {
+        return $this->belongsToMany(Activity::class, 'activity_participants', 'user_id', 'activity_id')
+            ->withTimestamps();
+    }
+
     public function isAuthorOf($model)
     {
         return $this->id == $model->user_id;
