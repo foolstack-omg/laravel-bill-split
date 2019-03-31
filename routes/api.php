@@ -69,6 +69,12 @@ $api->version('v1', [
             $api->post('activities/{activity}/bills/{bill?}', 'BillsController@save')
                 ->name('api.activities.bills.save');
 
+            $api->get('bills/{bill}', 'BillsController@show')
+                ->name('api.bills.show');
+
+            $api->delete('bills/{bill}', 'BillsController@delete')
+                ->name('api.bills.delete');
+
 
 
 

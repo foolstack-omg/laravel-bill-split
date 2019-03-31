@@ -23,7 +23,7 @@ class BillTransformer extends TransformerAbstract
         $data = [
             'id' => $bill->id,
             'user_id' => $bill->user_id,
-            'created_at' => $bill->created_at->format('Y/m/d'),
+            'created_at' => $bill->created_at->format('Y/m/d H:i'),
             'activity_id' => $bill->activity_id,
             'title' => $bill->title,
             'description' => $bill->description,
@@ -47,7 +47,7 @@ class BillTransformer extends TransformerAbstract
     }
 
     public function includeParticipants(Bill $bill) {
-        return $this->collection($bill->participants, new BillParticipantTransformer());
+        return $this->collection($bill->participants()->orderBy('id', 'desc')->get(), new BillParticipantTransformer());
     }
 
 

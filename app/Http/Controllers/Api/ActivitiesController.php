@@ -77,6 +77,7 @@ class ActivitiesController extends Controller
         $user = $this->user();
         $my_activities = $this->user()
             ->participatedActivities()
+            ->orderBy('id', 'desc')
             ->get();
 
         $my_activities_id = $my_activities->pluck('id');
@@ -97,11 +98,13 @@ class ActivitiesController extends Controller
             if(isset($grouped[$value->id])) {
                 $collection = collect($grouped[$value->id]);
                 $value->split_sum = $collection->sum(function($item){
-                    return $item->participants[0]->split_money;
+                    return $item->participants[0]->split_money * 100;
                 });
+                $value->split_sum = bcdiv($value->split_sum, 100, 2);
                 $value->unpaid_sum = $collection->sum(function($item){
-                    return $item->participants[0]->paid ? 0.00 : $item->participants[0]->split_money;
+                    return $item->participants[0]->paid ? 0.00 : $item->participants[0]->split_money * 100;
                 });
+                $value->unpaid_sum = bcdiv($value->unpaid_sum, 100, 2);
             }else{
                 $value->split_sum = 0.00;
                 $value->unpaid_sum = 0.00;

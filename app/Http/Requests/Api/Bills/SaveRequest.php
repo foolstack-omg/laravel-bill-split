@@ -16,18 +16,18 @@ class SaveRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string',
+            'title' => 'string|nullable',
             'description' => 'string|nullable',
             'money' => 'required|numeric|min:0',
-            'participants' => 'array',
-            'participants.*.user_id' => 'required|int',
-            'participants.*.split_money' => 'required|numeric',
-            'participants.*.fixed' => 'required|boolean',
-            'participants.*.paid' => 'required|boolean',
-            'bill_items' => 'array',
-            'bill_items.*.id' => 'int|nullable',
-            'bill_items.*.title' => 'required|string',
-            'bill_items.*.money' => 'required|numeric|min:0',
+            'participants.data' => 'array',
+            'participants.data.*.user_id' => 'required|int',
+            'participants.data.*.split_money' => 'required|numeric',
+            'participants.data.*.fixed' => 'required|boolean',
+            'participants.data.*.paid' => 'required|boolean',
+            'items.data' => 'array',
+            'items.data.*.id' => 'int|nullable',
+            'items.data.*.title' => 'required|string',
+            'items.data.*.money' => 'required|numeric|min:0',
 
         ];
     }

@@ -25,6 +25,7 @@ class BillParticipantTransformer extends TransformerAbstract
         $data = [
             'id' => $model->id,
             'bill_id' => $model->bill_id,
+            'user_id' => $model->user_id,
             'split_money' => $model->split_money,
             'fixed' => $model->fixed,
             'paid' => $model->paid

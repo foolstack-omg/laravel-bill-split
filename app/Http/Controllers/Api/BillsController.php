@@ -16,6 +16,7 @@ use App\Models\Bill;
 use App\Models\BillItem;
 use App\Models\BillParticipant;
 use App\Transformers\BillTransformer;
+use Carbon\Carbon;
 use DB;
 
 class BillsController extends Controller
@@ -26,24 +27,26 @@ class BillsController extends Controller
         }])->orderBy('created_at', 'desc')->get();
 
         $bills->each(function($item) {
-            if($item->participants){
+            if($item->participants->isNotEmpty()){
                 $item->split_money = $item->participants[0]->split_money;
                 $item->unpaid_money = $item->participants[0]->paid ? 0.00 : $item->split_money;
+            }else{
+                $item->split_money = 0;
+                $item->unpaid_money = 0;
             }
         });
 
         return $this->response->collection($bills, new BillTransformer());
     }
 
-    public function save(SaveRequest $request, Activity $activity, Bill $bill = null) {
-        $participants_collection = collect($request->participants);
+    public function show(Bill $bill) {
+        return $this->response->item($bill, new BillTransformer());
+    }
 
+    public function save(SaveRequest $request, Activity $activity, Bill $bill = null) {
+        $participants_collection = collect($request->input('participants.data'));
         if(bccomp($request->money, $participants_collection->sum('split_money'), 2) !== 0){
             return $this->response->errorBadRequest();
-        }
-
-        if($participants_collection->pluck('user_id')->diff($activity->participatedUsers()->pluck('user_id'))->isNotEmpty()){
-            return $this->response->errorBadRequest('B2');
         }
 
         DB::transaction(function() use ($request, $activity, $bill, $participants_collection) {
@@ -55,12 +58,12 @@ class BillsController extends Controller
                 $this->authorize('update', $bill);
             }
 
-            $bill->title = $request->title;
+            $bill->title = $request->title ?? Carbon::now()->format('Y-m-d H:i');
             $bill->description = $request->description ?? '';
             $bill->money = $request->money;
             $bill->save();
 
-            $bill_items_collection = collect($request->bill_items);
+            $bill_items_collection = collect($request->input('items.data'));
             $bill_item_ids = $bill_items_collection->pluck('id')->filter(function($v) {
                 return $v !== null;
             });
@@ -75,7 +78,7 @@ class BillsController extends Controller
             });
 
             BillParticipant::query()->where('bill_id', $bill->id)
-                ->whereNotIn('user_id', $participants_collection->pluck('user_id')->filter(function($v) {
+                ->whereNotIn('id', $participants_collection->pluck('id')->filter(function($v) {
                     return $v !== null;
                 }))
                 ->delete();
@@ -90,21 +93,22 @@ class BillsController extends Controller
             $fixed_money = $fixed_participants->sum('split_money');
 
             $remain_money = bcsub($bill->money, $fixed_money, 2);
+            $split_money = 0;
+            $last_one_split_money = 0;
+            if($not_fixed_participants->count() > 0) {
+                $split_money = bcdiv($remain_money, $not_fixed_participants->count(), 2);
+                $last_one_split_money = bcsub($remain_money, bcmul($split_money, $not_fixed_participants->count() - 1, 2), 2);
+            }
 
-            $split_money = bcdiv($remain_money, $not_fixed_participants->count(), 2);
-
-            $first_one_split_money = bcadd($split_money, bcsub($remain_money, bcmul($split_money, $not_fixed_participants->count(), 2), 2), 2);
-            $first_one_split = false;
-            $participants_collection->each(function($v, $k) use ($bill, $split_money, &$first_one_split, $first_one_split_money){
+            $participants_collection->each(function($v, $k) use ($bill, $split_money, &$remain_money, $last_one_split_money){
                 $v['bill_id'] = $bill->id;
                 if(!$v['fixed']) {
-                    if(!$first_one_split){
-                        $v['split_money'] = $first_one_split_money;
-                        $first_one_split = true;
+                    if($remain_money === $last_one_split_money) {
+                        $v['split_money'] = $last_one_split_money;
                     }else{
                         $v['split_money'] = $split_money;
                     }
-
+                    $remain_money = bcsub($remain_money, $v['split_money'], 2);
                 }
 
                 BillParticipant::query()->updateOrCreate(
@@ -116,7 +120,22 @@ class BillsController extends Controller
 
         });
 
-        return $this->response->accepted();
+        return $this->response->noContent();
+
+    }
+
+    public function delete(Bill $bill) {
+        if(!$this->user()->isAuthorOf($bill)){
+            return $this->response->errorUnauthorized();
+        }
+
+        DB::transaction(function() use ($bill) {
+            $bill->items()->delete();
+            $bill->participants()->delete();
+            $bill->delete();
+        });
+
+        return $this->response->noContent();
 
     }
 }

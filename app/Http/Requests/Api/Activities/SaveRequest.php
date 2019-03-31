@@ -16,7 +16,7 @@ class SaveRequest extends FormRequest
     {
         return [
             'id' => 'int',
-            'name' => 'required|string|between:1,10',
+            'name' => 'required|string|between:1,20',
         ];
     }
 }
