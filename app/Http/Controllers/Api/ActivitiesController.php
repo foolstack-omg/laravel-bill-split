@@ -119,7 +119,7 @@ class ActivitiesController extends Controller
     public function participate(Activity $activity) {
         $activity->participatedUsers()->syncWithoutDetaching([$this->user()->id]);
 
-        return $this->response->created();
+        return $this->response->noContent();
     }
 
 
