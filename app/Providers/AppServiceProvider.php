@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
 
             Log::debug(sprintf('[%s] %s', $duration, $realSql));
         });
+
+        \Schema::defaultStringLength(191);
     }
 
     /**
