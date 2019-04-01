@@ -23,8 +23,12 @@ class BillsController extends Controller
 {
     public function bills(Activity $activity) {
         $bills = $activity->bills()
-            ->whereHas('participants', function($query){
-                $query->where('user_id', $this->user->id);
+            ->where(function($query) {
+                $query
+                    ->where('user_id', $this->user->id)
+                    ->orWhereHas('participants', function($query){
+                        $query->where('user_id', $this->user->id);
+                    });
             })
             ->with(['participants' => function ($query) {
                 $query->where('user_id', $this->user->id);
