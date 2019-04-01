@@ -22,9 +22,14 @@ use DB;
 class BillsController extends Controller
 {
     public function bills(Activity $activity) {
-        $bills = $activity->bills()->with(['participants' => function ($query) {
-            $query->where('user_id', $this->user->id);
-        }])->orderBy('created_at', 'desc')->get();
+        $bills = $activity->bills()
+            ->whereHas('participants', function($query){
+                $query->where('user_id', $this->user->id);
+            })
+            ->with(['participants' => function ($query) {
+                $query->where('user_id', $this->user->id);
+            }])
+            ->orderBy('created_at', 'desc')->get();
 
         $bills->each(function($item) {
             if($item->participants->isNotEmpty()){
