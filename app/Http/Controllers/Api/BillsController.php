@@ -31,18 +31,35 @@ class BillsController extends Controller
                     });
             })
             ->with(['participants' => function ($query) {
-                $query->where('user_id', $this->user->id);
+                //$query->where('user_id', $this->user->id);
             }])
             ->orderBy('created_at', 'desc')->get();
 
         $bills->each(function($item) {
-            if($item->participants->isNotEmpty()){
-                $item->split_money = $item->participants[0]->split_money;
-                $item->unpaid_money = $item->participants[0]->paid ? 0.00 : $item->split_money;
+            $participants_of_me = $item->participants->filter(function($participant) {
+                return $participant->user_id === $this->user->id;
+            });
+
+            if($participants_of_me->isNotEmpty()){
+                $item->split_money = $participants_of_me->first()->split_money;
+                $item->unpaid_money = $participants_of_me->first()->paid ? 0.00 : $item->split_money;
             }else{
                 $item->split_money = 0;
                 $item->unpaid_money = 0;
             }
+
+            if ($item->user_id === $this->user->id) {
+                $all_unpaid_money = 0.00;
+                $item->participants->each(function($participant) use (&$all_unpaid_money) {
+                    if($participant->user_id !== $this->user->id && !$participant->paid) {
+                        $all_unpaid_money = bcadd($all_unpaid_money, $participant->split_money, 2);
+                    }
+                });
+                $item->all_unpaid_money = $all_unpaid_money;
+            }
+
+
+
         });
 
         return $this->response->collection($bills, new BillTransformer());

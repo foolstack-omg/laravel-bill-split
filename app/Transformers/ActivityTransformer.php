@@ -27,6 +27,7 @@ class ActivityTransformer extends TransformerAbstract
             'wx_a_code' => $activity->wx_a_code,
             'split_sum' => $activity->split_sum ?? null,
             'unpaid_sum' => $activity->unpaid_sum ?? null,
+            'all_unpaid_sum' => $activity->all_unpaid_sum ?? null,
         ];
     }
 

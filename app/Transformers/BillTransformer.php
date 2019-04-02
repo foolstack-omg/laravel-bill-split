@@ -35,6 +35,9 @@ class BillTransformer extends TransformerAbstract
         if(isset($bill->unpaid_money)){
             $data['unpaid_money'] = $bill->unpaid_money;
         }
+        if(isset($bill->all_unpaid_money)){
+            $data['all_unpaid_money'] = $bill->all_unpaid_money;
+        }
         return $data;
     }
 

@@ -83,31 +83,47 @@ class ActivitiesController extends Controller
         $my_activities_id = $my_activities->pluck('id');
 
         $my_bills = Bill::query()->whereIn('activity_id', $my_activities_id)
-            ->select('id', 'activity_id')
+            ->select('id', 'activity_id','user_id')
             ->whereHas('participants', function($query) use ($user){
                 $query->where('user_id', $user->id);
             })
             ->with(['participants' => function($query) use ($user) {
-                $query->where('user_id', $user->id);
+
             }])
             ->get();
 
         $grouped = $my_bills->groupBy('activity_id');
 
         $my_activities->each(function($value) use ($grouped){
+            $value->split_sum = 0.00;
+            $value->unpaid_sum = 0.00;
+
             if(isset($grouped[$value->id])) {
+                $value->all_unpaid_sum = 0.00;
                 $collection = collect($grouped[$value->id]);
-                $value->split_sum = $collection->sum(function($item){
-                    return $item->participants[0]->split_money * 100;
+                $participants_of_me = $collection->pluck('participants')->collapse()->filter(function($participant) {
+                    return $participant->user_id === $this->user->id;
+                });
+
+                $value->split_sum = $participants_of_me->sum(function($item){
+                    return $item->split_money * 100;
                 });
                 $value->split_sum = bcdiv($value->split_sum, 100, 2);
-                $value->unpaid_sum = $collection->sum(function($item){
-                    return $item->participants[0]->paid ? 0.00 : $item->participants[0]->split_money * 100;
+                $value->unpaid_sum = $participants_of_me->sum(function($item){
+                    return $item->paid ? 0.00 : $item->split_money * 100;
                 });
                 $value->unpaid_sum = bcdiv($value->unpaid_sum, 100, 2);
-            }else{
-                $value->split_sum = 0.00;
-                $value->unpaid_sum = 0.00;
+
+
+                $value->all_unpaid_sum = $collection->filter(function($bill) {
+                    return $bill->user_id === $this->user->id;
+                })->pluck('participants')->collapse()->filter(function($participant) {
+                    return $participant->user_id !== $this->user->id && !$participant->paid;
+                })->sum(function($item) {
+                    return $item->split_money * 100;
+                });
+
+                $value->all_unpaid_sum = bcdiv($value->all_unpaid_sum, 100, 2);
             }
         });
 
