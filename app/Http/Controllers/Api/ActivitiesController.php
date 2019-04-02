@@ -84,8 +84,12 @@ class ActivitiesController extends Controller
 
         $my_bills = Bill::query()->whereIn('activity_id', $my_activities_id)
             ->select('id', 'activity_id','user_id')
-            ->whereHas('participants', function($query) use ($user){
-                $query->where('user_id', $user->id);
+            ->where(function($query) {
+                $query
+                    ->where('user_id', $this->user->id)
+                    ->orWhereHas('participants', function($query){
+                        $query->where('user_id', $this->user->id);
+                    });
             })
             ->with(['participants' => function($query) use ($user) {
 
@@ -115,9 +119,7 @@ class ActivitiesController extends Controller
                 $value->unpaid_sum = bcdiv($value->unpaid_sum, 100, 2);
 
 
-                $value->all_unpaid_sum = $collection->filter(function($bill) {
-                    return $bill->user_id === $this->user->id;
-                })->pluck('participants')->collapse()->filter(function($participant) {
+                $value->all_unpaid_sum = $collection->pluck('participants')->collapse()->filter(function($participant) {
                     return $participant->user_id !== $this->user->id && !$participant->paid;
                 })->sum(function($item) {
                     return $item->split_money * 100;
