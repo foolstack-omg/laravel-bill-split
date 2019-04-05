@@ -33,6 +33,8 @@ $api->version('v1', [
         'expires' => config('api.rate_limits.access.expires'),
     ], function ($api) {
         // 游客可以访问的接口
+        $api->get('qas', 'QAsController@index')
+            ->name('api.qas.index');
 
 
         // 需要 token 验证的接口
@@ -74,9 +76,6 @@ $api->version('v1', [
 
             $api->delete('bills/{bill}', 'BillsController@delete')
                 ->name('api.bills.delete');
-
-
-
 
 
         });
