@@ -17,7 +17,7 @@
 ## 小程序码
 
 <html>
-<img style='width: 200px;' src='https://bill-split.ergou.live/images/weapp_qrcode.jpg'/>
+<img width='200' src='https://bill-split.ergou.live/images/weapp_qrcode.jpg'/>
 </html>
 
 ## 支持一下
@@ -25,7 +25,7 @@
 您的支持是我前进最大的动力
 
 <html>
-<img style='width: 200px;' src='https://bill-split.ergou.live/images/receive_money.jpeg'/>
+<img width='200'  src='https://bill-split.ergou.live/images/receive_money.jpeg'/>
 </html>
 
 ## 项目成员
@@ -36,5 +36,5 @@
 ## 联系我们
 
 <html>
-<img style='width: 200px;' src='https://bill-split.ergou.live/images/contact.jpeg'/>
+<img width='200'  src='https://bill-split.ergou.live/images/contact.jpeg'/>
 </html>
