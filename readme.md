@@ -2,8 +2,13 @@
 
 基于Laravel5.7 - Dingo Api - Jwt 开发的微信小程序服务器端接口程序
 
-
 - [小程序客户端项目链接](https://github.com/654943305/bill-split-weapp)
+
+## 功能点
+- 微信小程序服务器端接口使用
+- Dingo Api和Jwt的使用
+- 使用Policy实现权限控制
+- 使用Transformer控制Api返回结果
 
 ## 项目部署
 
@@ -11,8 +16,9 @@
 2. `cp .env.example .env`
 3. `php artisan key:generate`
 4. `php artisan jwt:secret`
-3. 配置 `.env` 文件中的微信小程序配置项以及数据库配置
-4. 执行 `php artisan migrate`
+5. 配置 `.env` 文件中的微信小程序配置项以及数据库配置
+6. 执行 `php artisan migrate`
+7. `php artisan storage:link`
 
 ## 小程序码
 
