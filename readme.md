@@ -37,7 +37,7 @@
 ## 项目成员
 
 - 技术 （刘晓峰 Stefan）
-- UI设计 （优雅de兔子君）
+- UI设计 （优雅de兔子君）[设计师作品集](https://mrbunny.zcool.com.cn)
 
 ## 联系我们
 
