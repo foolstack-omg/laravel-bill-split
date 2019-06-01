@@ -9,6 +9,8 @@
 
 1. `composer install`
 2. `cp .env.example .env`
+3. `php artisan key:generate`
+4. `php artisan jwt:secret`
 3. 配置 `.env` 文件中的微信小程序配置项以及数据库配置
 4. 执行 `php artisan migrate`
 
@@ -33,4 +35,6 @@
 
 ## 联系我们
 
-
+<html>
+<img style='width: 200px;' src='https://bill-split.ergou.live/images/contact.jpeg'/>
+</html>
