@@ -10,11 +10,13 @@
         "dingo/api": "^2.0.0-alpha2",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "intervention/image": "^2.5",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "liyu/dingo-serializer-switch": "^0.3.1",
         "overtrue/laravel-wechat": "~4.0",
-        "tymon/jwt-auth": "1.0.0-rc.3"
+        "tymon/jwt-auth": "1.0.0-rc.3",
+      "ext-gd": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
