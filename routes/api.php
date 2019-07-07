@@ -77,6 +77,9 @@ $api->version('v1', [
             $api->delete('bills/{bill}', 'BillsController@delete')
                 ->name('api.bills.delete');
 
+            $api->get('bills/{bill}/poster', 'BillsController@poster')
+                ->name('api.bills.poster');
+
 
         });
     });
