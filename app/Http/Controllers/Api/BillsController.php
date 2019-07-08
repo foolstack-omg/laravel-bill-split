@@ -178,7 +178,7 @@ class BillsController extends Controller
         function _circleImg($imgPath)
         {
             try {
-                $src_img = imagecreatefromjpeg($imgPath);
+                $src_img = @imagecreatefromjpeg($imgPath);
             }catch (\Exception $e) {
                 try {
                     $src_img = imagecreatefrompng($imgPath);
