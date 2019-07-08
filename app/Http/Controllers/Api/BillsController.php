@@ -177,7 +177,20 @@ class BillsController extends Controller
         }
         function _circleImg($imgPath)
         {
-            $src_img = imagecreatefromjpeg($imgPath);
+            try {
+                $src_img = imagecreatefromjpeg($imgPath);
+            }catch (\Exception $e) {
+                try {
+                    $src_img = imagecreatefrompng($imgPath);
+                }catch (\Exception $e) {
+                    $src_img = null;
+                }
+
+            }
+            if($src_img === null) {
+                return null;
+            }
+
 
             list($w, $h) = getimagesize($imgPath);
             $w           = $h = min($w, $h);
@@ -241,8 +254,15 @@ class BillsController extends Controller
             $portrait_url = $participant->user->avatar_url;
             if(@file_get_contents($portrait_url, null, null, 0, 1)){
                 $portrait = _circleImg($portrait_url);
-                $portrait = Image::make($portrait);
-                $portrait->resize(78, 78);
+                if($portrait === null) {
+                    $portrait = Image::canvas(78, 78);
+                    $portrait->circle(78, 39, 39, function($draw) {
+                        $draw->background('#F6F5F9');
+                    });
+                } else {
+                    $portrait = Image::make($portrait);
+                    $portrait->resize(78, 78);
+                }
             } else {
                 $portrait = Image::canvas(78, 78);
                 $portrait->circle(78, 39, 39, function($draw) {
