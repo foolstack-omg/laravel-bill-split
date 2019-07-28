@@ -59,7 +59,7 @@ class ActivitiesController extends Controller
             }
         });
 
-        return $this->response->created();
+        return $this->response->item($activity, (new ActivityTransformer()))->setStatusCode(201);
     }
 
     public function show(Activity $activity) {

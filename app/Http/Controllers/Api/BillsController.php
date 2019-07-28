@@ -18,6 +18,7 @@ use App\Models\BillParticipant;
 use App\Transformers\BillTransformer;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Http\Request;
 use Image;
 
 class BillsController extends Controller
@@ -171,10 +172,14 @@ class BillsController extends Controller
      * @param Bill $bill
      * @return mixed|void
      */
-    public function poster(Bill $bill) {
+    public function poster(Request $request, Bill $bill) {
+        $type = $request->type;
+
         if(!$this->user()->isAuthorOf($bill)){
             return $this->response->errorUnauthorized();
         }
+        $user = $this->user();
+
         function _circleImg($imgPath)
         {
             try {
@@ -342,20 +347,65 @@ class BillsController extends Controller
         /**
          * 底部二维码部分
          */
-        $bottom->text('未来会有收款码功能', 400, 208, function($font) {
+        $portrait_url = $user->avatar_url;
+        if(@file_get_contents($portrait_url, null, null, 0, 1)){
+            $portrait = _circleImg($portrait_url);
+            if($portrait === null) {
+                $portrait = Image::canvas(78, 78);
+                $portrait->circle(78, 39, 39, function($draw) {
+                    $draw->background('#F6F5F9');
+                });
+            } else {
+                $portrait = Image::make($portrait);
+                $portrait->resize(78, 78);
+            }
+        } else {
+            $portrait = Image::canvas(78, 78);
+            $portrait->circle(78, 39, 39, function($draw) {
+                $draw->background('#F6F5F9');
+            });
+        }
+        $bottom->insert($portrait, 'top-left', 80, 97);
+
+
+        $bottom->text("{$user->name} 的收款码", 180, 119, function($font) {
             $font->file(public_path('fonts/PingFang-Bold.ttf'));
-            $font->size(32);
-            $font->color('#3C2648');
-            $font->align('center');
+            $font->size(36);
+            $font->color('#FFFFFF');
+            $font->align('left');
             $font->valign('top');
         });
-        $bottom->text('敬请期待', 400, 308, function($font) {
-            $font->file(public_path('fonts/PingFang-Bold.ttf'));
-            $font->size(68);
-            $font->color('#3C2648');
-            $font->align('center');
-            $font->valign('top');
-        });
+
+        $pay_url = null;
+        $pay_name = '';
+        switch ($type) {
+            case 'wxpay':
+                $pay_name = '微信';
+                $pay_url = $user->wxpay;
+                break;
+            case 'alipay':
+                $pay_name = '支付宝';
+                $pay_url = $user->alipay;
+                break;
+        }
+
+        if($pay_url) {
+            $img = Image::canvas(308, 308, '#FFFFFF');
+            $img->rectangle(1, 1, 306, 306, function ($draw) {
+                $draw->border(2, '#000');
+            });
+            $qrcode = Image::make($pay_url)->resize(268, 268);
+            $img->insert($qrcode, 'top-left', 18, 18);
+
+            $bottom->insert($img, 'top-left', 250, 208);
+            $bottom->text("扫一扫{$pay_name}收款码付款", 400, 541, function($font) {
+                $font->file(public_path('fonts/PingFang-Bold.ttf'));
+                $font->size(28);
+                $font->color('#FFFFFF');
+                $font->align('center');
+                $font->valign('top');
+            });
+        }
 
 
         /**
@@ -367,7 +417,7 @@ class BillsController extends Controller
         $canvas->insert($bottom, 'top-left', 0, $top->height() + $content->height());
 
 
-        return $canvas->response('png');
+        return $canvas->response('png', 70);
 
     }
 }

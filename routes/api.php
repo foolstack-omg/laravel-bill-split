@@ -44,6 +44,12 @@ $api->version('v1', [
             $api->get('user', 'UsersController@me')
                 ->name('api.user.me');
 
+            $api->post('user/store_images', 'UsersController@storeImages')
+                ->name('api.user.store_images');
+
+            $api->delete('user/delete_images', 'UsersController@deleteImages')
+                ->name('api.user.delete_images');
+
             $api->get('/activities', "ActivitiesController@myActivities")
                 ->name('api.activities');
 

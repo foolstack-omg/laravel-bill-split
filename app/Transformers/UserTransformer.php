@@ -13,6 +13,8 @@ class UserTransformer extends TransformerAbstract
             'id' => $user->id,
             'name' => $user->name,
             'avatar_url' => $user->avatar_url,
+            'wxpay' => $user->wxpay,
+            'alipay' => $user->alipay,
             'created_at' => $user->created_at->toDateTimeString(),
             'updated_at' => $user->updated_at->toDateTimeString(),
         ];
