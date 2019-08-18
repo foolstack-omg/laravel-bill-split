@@ -14,8 +14,8 @@ class AddWxpayAndAlipayToTableUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('wxpay')->comment('微信支付二维码');
-            $table->string('alipay')->comment('支付宝支付二维码');
+            $table->string('wxpay')->default('')->comment('微信支付二维码');
+            $table->string('alipay')->default('')->comment('支付宝支付二维码');
         });
     }
 
