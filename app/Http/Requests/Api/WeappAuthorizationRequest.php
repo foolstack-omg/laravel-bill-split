@@ -14,7 +14,7 @@ class WeappAuthorizationRequest extends FormRequest
         return [
             'code' => 'required|string',
             'name' => 'required|string',
-            'avatar_url' => 'present|string',
+            'avatar_url' => 'present|string|nullable',
             'gender' => 'present|int',
             'city' => 'present|string|nullable',
             'province' => 'present|string|nullable',
