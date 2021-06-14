@@ -17,7 +17,7 @@ class PdfController extends Controller
 {
     public function pdf() {
         $pdf = PDF::loadView('pdf', [])->setOptions([
-            'orientation' => 'Landscape',
+//            'orientation' => 'Landscape',
             'margin-bottom' => 0,
             'margin-left' => 0,
             'margin-right' => 0,
