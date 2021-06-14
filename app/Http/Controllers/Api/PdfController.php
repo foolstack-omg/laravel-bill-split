@@ -17,7 +17,11 @@ class PdfController extends Controller
 {
     public function pdf() {
         $pdf = PDF::loadView('pdf', [])->setOptions([
-            'orientation' => 'Landscape'
+            'orientation' => 'Landscape',
+            'margin-bottom' => 0,
+            'margin-left' => 0,
+            'margin-right' => 0,
+            'margin-top' => 0
         ]); //pdf.invoice是你的blade模板
         return $pdf->download(date('Y-m-d-', time()).str_random(4).'.pdf');
     }
