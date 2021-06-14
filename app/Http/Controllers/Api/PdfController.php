@@ -23,7 +23,8 @@ class PdfController extends Controller
             'margin-right' => 0,
             'margin-top' => 0,//210 x 297
             'page-height' => 210,
-            'page-width' => 273
+            'page-width' => 273,
+            'disable-smart-shrinking' => true
         ]); //pdf.invoice是你的blade模板
         return $pdf->download(date('Y-m-d-', time()).str_random(4).'.pdf');
     }
