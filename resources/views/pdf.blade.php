@@ -43,9 +43,9 @@
 
            <img src="{{ asset('images/3.png') }}" style="position: absolute; width: 90mm; height: 68mm; left: 33mm; top: 33mm;"/>
            <img src="{{ asset('images/3.png') }}" style="position: absolute; width: 90mm; height: 68mm; right: 33mm; top: 33mm;"/>
-           <div style="top: 110mm; left: 33mm; position: absolute; font-size: 5mm; color: #1b4b72; font-weight: bold;">位 置:杏锦路</div>
-           <div style="top: 120mm; left: 33mm; position: absolute; font-size: 5mm; color: #1b4b72; font-weight: bold;">点 位:园博苑西门站</div>
-           <div style="top: 130mm; left: 33mm; position: absolute; font-size: 5mm; color: #1b4b72; font-weight: bold;">编 号:hct054</div>
+           <div style="top: 110mm; left: 33mm; position: absolute; font-size: 5mm; color: #1b4b72; font-weight: bold; width: 200cm;">位 置:杏锦路</div>
+           <div style="top: 120mm; left: 33mm; position: absolute; font-size: 5mm; color: #1b4b72; font-weight: bold; width: 200cm;">点 位:园博苑西门站</div>
+           <div style="top: 130mm; left: 33mm; position: absolute; font-size: 5mm; color: #1b4b72; font-weight: bold; width: 200cm;">编 号:hct054</div>
        </div>
 
        <div class="page">
