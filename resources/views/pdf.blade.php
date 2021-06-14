@@ -11,20 +11,19 @@
             html, body {
                 margin: 0;
                 padding: 0;
-                width: 1000px;
             }
             .page{
                 page-break-inside:avoid;
                 position: relative;
-                width:1040px;
-                height:800px;
+                width:273mm;
+                height:210mm;
             }
         </style>
     </head>
     <body>
        <div class="page">
-           <img src="https://wkhtmltopdf.org/images/banner.jpg" style="position: absolute; width: 500px; height: 100%; left: 0; top: 0;"/>
-           <div style="top: 100px; right: 100px; position: absolute;">100000</div>
+           <img src="https://wkhtmltopdf.org/images/banner.jpg" style="position: absolute; width: 136mm; height: 210mm; left: 0; top: 0;"/>
+           <div style="top: 10mm; right: 10mm; position: absolute;">100000</div>
        </div>
        <div class="page" >
            <div style="top: 100px; right: 100px; position: absolute;">100000</div>
