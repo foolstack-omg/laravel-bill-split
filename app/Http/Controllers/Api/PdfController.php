@@ -22,7 +22,7 @@ class PdfController extends Controller
             'margin-left' => 0,
             'margin-right' => 0,
             'margin-top' => 0,//210 x 297
-            'page-height' => 210,
+            'page-height' => 152,
             'page-width' => 273,
             'disable-smart-shrinking' => true
         ]); //pdf.invoice是你的blade模板

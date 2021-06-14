@@ -10,23 +10,31 @@
                 margin: 0;
                 padding: 0;
                 width:273mm;
-                height:210mm;
+                height:152mm;
             }
             .page{
                 page-break-inside:avoid;
                 position: relative;
                 width:273mm;
-                height:210mm;
+                height:152mm;
             }
         </style>
     </head>
     <body>
        <div class="page">
-           <img src="https://wkhtmltopdf.org/images/banner.jpg" style="position: absolute; width: 136mm; height: 210mm; left: 0; top: 0;"/>
-           <div style="top: 10mm; right: 10mm; position: absolute;">你好</div>
+           <img src="{{ asset('images/1.png') }}" style="position: absolute; width: 53mm; height: 12mm; left: 15mm; top: 15mm;"/>
+           <img src="{{ asset('images/2.png') }}" style="position: absolute; width: 136mm; height: 152mm; right: 0; top: 0;"/>
+           <div style="top: 60mm; left: 20mm; position: absolute; color: #1b4b72">
+               <div style="display: inline;font-size: 10mm; font-weight: bold;">世茂广场</div>
+               <div style="display: inline;font-size: 6mm;font-weight: bold;">上画检测报告</div>
+           </div>
        </div>
        <div class="page" >
-           <div style="top: 100px; right: 100px; position: absolute;">100000</div>
+           <img src="{{ asset('images/4.png') }}" style="position: absolute; width: 273mm; height: 17mm; left: 0; top: 10mm;"/>
+           <img src="{{ asset('images/5.png') }}" style="position: absolute; width: 64mm; height: 13mm; right: 2mm; top: 13mm;"/>
+           <div style="top: 16mm; left: 10mm; position: absolute; font-size: 6mm; color: white; font-weight: bold;">天艺传媒简介</div>
+           <img src="{{ asset('images/3.png') }}" style="position: absolute; width: 273mm; height: 82mm; left: 0; top: 27mm;"/>
+           <div style="padding: 5mm; white-space: pre-line; line-height: 1.5; color: black; font-size: 5mm; position: absolute; top: 110mm; left: 0; width: 273mm;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;厦门市天艺传媒股份有限公司创立于1993年，业务范围覆盖品牌管理、创意策划、整合营销、媒体投放等传播链条。公司发 展近26年，在户外传媒领域极具市场竞争优势，形成了候车亭、站名牌、路名牌、高速大牌、厦门国际邮轮中心媒体、厦门航空 舱内座椅头片媒体、游轮冠名权及船身媒体等“海·陆·空”360°全媒体覆盖。2015年10月天艺成功登陆新三板，成为福建省户外 传媒类先行上市企业。</div>
        </div>
        <div class="page">
            <div style="top: 100px; right: 100px; color: #1b4b72;  position: absolute;">100000</div>
