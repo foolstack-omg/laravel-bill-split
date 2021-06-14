@@ -23,7 +23,7 @@
     </head>
     <body>
        <div class="page">
-           <img src="https://www.baidu.com/img/pc_4dd272233fa6c632f9dfadf9d948974f.gif" style="position: absolute; width: 500px; height: 100%; left: 0; top: 0;"/>
+           <img src="https://wkhtmltopdf.org/images/banner.jpg" style="position: absolute; width: 500px; height: 100%; left: 0; top: 0;"/>
            <div style="top: 100px; right: 100px; position: absolute;">100000</div>
        </div>
        <div class="page" >
