@@ -24,12 +24,13 @@
     <body>
        <div class="page">
            <img src="https://www.baidu.com/img/pc_4dd272233fa6c632f9dfadf9d948974f.gif" style="position: absolute; width: 500px; height: 500px; left: 100px; top: 100px;"/>
+           <div style="top: 100px; right: 100px; position: absolute;">100000</div>
        </div>
        <div class="page" >
-           <div style="top: 100px; right: 100px;">100000</div>
+           <div style="top: 100px; right: 100px; position: absolute;">100000</div>
        </div>
        <div class="page">
-           <div style="top: 100px; right: 100px; color: #1b4b72">100000</div>
+           <div style="top: 100px; right: 100px; color: #1b4b72;  position: absolute;">100000</div>
        </div>
     </body>
 </html>

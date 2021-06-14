@@ -37,6 +37,8 @@ $api->version('v1', [
             ->name('api.qas.index');
         $api->get('pdf', 'PdfController@pdf')
             ->name('api.pdf');
+        $api->get('pdf/view', 'PdfController@view')
+            ->name('api.view');
 
 
 
