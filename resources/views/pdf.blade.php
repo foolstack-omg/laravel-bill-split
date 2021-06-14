@@ -11,6 +11,8 @@
             html, body {
                 margin: 0;
                 padding: 0;
+                width:273mm;
+                height:210mm;
             }
             .page{
                 page-break-inside:avoid;
