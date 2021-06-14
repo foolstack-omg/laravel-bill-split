@@ -40,6 +40,12 @@
            <img src="{{ asset('images/4.png') }}" style="position: absolute; width: 273mm; height: 17mm; left: 0; top: 10mm;"/>
            <img src="{{ asset('images/5.png') }}" style="position: absolute; width: 64mm; height: 13mm; right: 2mm; top: 13mm;"/>
            <div style="top: 16mm; left: 10mm; position: absolute; font-size: 6mm; color: white; font-weight: bold;">广告投放详情</div>
+
+           <img src="{{ asset('images/3.png') }}" style="position: absolute; width: 90mm; height: 68mm; left: 33mm; top: 33mm;"/>
+           <img src="{{ asset('images/3.png') }}" style="position: absolute; width: 90mm; height: 68mm; right: 33mm; top: 33mm;"/>
+           <div style="top: 110mm; left: 33mm; position: absolute; font-size: 5mm; color: #1b4b72; font-weight: bold;">位 置:杏锦路</div>
+           <div style="top: 120mm; left: 33mm; position: absolute; font-size: 5mm; color: #1b4b72; font-weight: bold;">点 位:园博苑西门站</div>
+           <div style="top: 130mm; left: 33mm; position: absolute; font-size: 5mm; color: #1b4b72; font-weight: bold;">编 号:hct054</div>
        </div>
 
        <div class="page">
