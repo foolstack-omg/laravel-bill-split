@@ -16,8 +16,8 @@
             .page{
                 page-break-inside:avoid;
                 position: relative;
-                width:1362px;
-                min-height:800px;
+                width:1040px;
+                height:800px;
             }
         </style>
     </head>
