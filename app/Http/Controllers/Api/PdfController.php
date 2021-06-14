@@ -16,6 +16,7 @@ use PDF;
 class PdfController extends Controller
 {
     public function pdf() {
-        return PDF::loadFile('http://www.baidu.com')->inline('github.pdf');
+        $pdf = PDF::loadView('pdf', []); //pdf.invoice是你的blade模板
+        return $pdf->download(date('Y-m-d-', time()).str_random(4).'.pdf');
     }
 }
