@@ -2,8 +2,6 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>Laravel</title>
 
         <!-- Styles -->
@@ -25,7 +23,7 @@
     <body>
        <div class="page">
            <img src="https://wkhtmltopdf.org/images/banner.jpg" style="position: absolute; width: 136mm; height: 210mm; left: 0; top: 0;"/>
-           <div style="top: 10mm; right: 10mm; position: absolute;">100000</div>
+           <div style="top: 10mm; right: 10mm; position: absolute;">你好</div>
        </div>
        <div class="page" >
            <div style="top: 100px; right: 100px; position: absolute;">100000</div>
