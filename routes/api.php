@@ -35,6 +35,9 @@ $api->version('v1', [
         // 游客可以访问的接口
         $api->get('qas', 'QAsController@index')
             ->name('api.qas.index');
+        $api->get('pdf', 'PdfController@pdf')
+            ->name('api.pdf');
+
 
 
         // 需要 token 验证的接口
