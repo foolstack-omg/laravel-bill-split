@@ -14,10 +14,10 @@
                 width: 1000px;
             }
             .page{
-                width: 1000px;
-                height: 600px;
                 page-break-inside:avoid;
                 position: relative;
+                width:1362px;
+                min-height:800px;
             }
         </style>
     </head>
