@@ -19,7 +19,8 @@
         "laravel/tinker": "^1.0",
         "liyu/dingo-serializer-switch": "^0.3.1",
         "overtrue/laravel-wechat": "~4.0",
-        "tymon/jwt-auth": "1.0.0-rc.3"
+        "tymon/jwt-auth": "1.0.0-rc.3",
+        "ext-json": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
