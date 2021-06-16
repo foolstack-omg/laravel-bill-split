@@ -47,6 +47,7 @@ class PdfController extends Controller
             'page-width' => 273,
             'disable-smart-shrinking' => true
         ]); //pdf.invoice是你的blade模板
+        $pdf->snappy()->setTimeout(600);
         return $pdf->download($data['title'].'-'.$data['subtitle'].'-'.date('Ymd-', time()).str_random(4).'.pdf');
     }
 
